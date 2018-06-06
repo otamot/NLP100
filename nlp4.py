@@ -36,6 +36,7 @@ class Chunk:
         for morph in self.morphs:
             if morph.pos == pos:
                 return morph
+
     def last_pos(self, pos: str) -> Morph:
         for morph in self.morphs[::-1]:
             if morph.pos == pos:
@@ -150,6 +151,28 @@ def nlp47(sentence: str) -> str:
     return '\n'.join(res)
 
 
+def nlp48(sentence: str) -> str:
+    chunks = get_chunk_list(sentence)
+    res = []
+    for i, chunk in enumerate(chunks):
+        if chunk.has_pos('名詞'):
+            path = [chunk.join_morphs()]
+            j = i
+            while True:
+                next = chunks[j].dst
+                if next == -1:
+                    break
+                path.append(chunks[next].join_morphs())
+                j = next
+            if len(path) > 1:
+                res.append(' -> '.join(path))
+    return '\n'.join(res)
+
+
+def nlp48(sentence: str) -> str:
+    return ''
+
+
 if __name__ == '__main__':
     # print(40, nlp40("太郎はこの本を渡した。"))
     # print(41, nlp41("太郎はこの本を渡した。"))
@@ -158,5 +181,7 @@ if __name__ == '__main__':
     # print(44, nlp44("太郎はこの本を渡した"))
     # print(45, nlp45('吾輩はここで始めて人間というものを見た'))
     # print(46, nlp46('吾輩はここで始めて人間というものを見た'))
-    print(47, nlp47('別段くるにも及ばんさと、主人は手紙に返事をする。'))
+    # print(47, nlp47('別段くるにも及ばんさと、主人は手紙に返事をする。'))
+    # print(48, nlp48('吾輩はここで始めて人間というものを見た'))
+    print(49, nlp49('吾輩はここで始めて人間というものを見た'))
     pass
