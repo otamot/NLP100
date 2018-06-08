@@ -3,3 +3,4 @@ cabocha_tree
 *.txt
 *.json
 .idea/
+rt-polaritydata/
